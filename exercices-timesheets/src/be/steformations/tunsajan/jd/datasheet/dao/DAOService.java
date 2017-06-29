@@ -10,26 +10,43 @@ import be.steformations.java_data.timesheets.entities.Employee;
 import be.steformations.java_data.timesheets.entities.Prestation;
 import be.steformations.java_data.timesheets.entities.Project;
 import be.steformations.java_data.timesheets.service.TimesheetsDataService;
+import be.steformations.tunsajan.jd.datasheet.mapper.MapperEmployee;
 
 public class DAOService implements TimesheetsDataService {
 	private JdbcTemplate _jdbc;
 	
 	public DAOService() {
-		//this.jdbc = new JdbcTemplate(new DriverManagerDataSource("jdbc:postgresql://localhost/datasheet", "postgres", "postgres"));
-		this._jdbc = new JdbcTemplate(new DriverManagerDataSource("jdbc:postgresql://PRIM2014-14/datasheet", "postgres", "postgres"));
+		this._jdbc = new JdbcTemplate(new DriverManagerDataSource("jdbc:postgresql://localhost/postgres", "postgres", "postgres"));
+		//this._jdbc = new JdbcTemplate(new DriverManagerDataSource("jdbc:postgresql://PRIM2014-14/datasheet", "postgres", "postgres"));
 	}
 	
 
 	@Override
 	public List<? extends Employee> findAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> liste = null;
+		String sqlEmployee = "SELECT * "
+				+ "FROM employee ";
+		try {
+				MapperEmployee mapper = new MapperEmployee();
+				liste = this._jdbc.query(sqlEmployee, mapper);
+			} catch(org.springframework.dao.EmptyResultDataAccessException e) {e.getMessage();}
+				
+		return liste;
 	}
 
 	@Override
 	public Employee findOneEmployeeById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		if(id < 0 ) return null;
+		Employee employee = null;
+		String sqlEmployee = "SELECT * "
+				+ "FROM employee "
+				+ " WHERE id = ?";
+		try {
+				MapperEmployee mapper = new MapperEmployee();
+				employee = this._jdbc.queryForObject(sqlEmployee, mapper, id);
+			} catch(org.springframework.dao.EmptyResultDataAccessException e) {e.getMessage();}
+				
+		return employee;
 	}
 
 	@Override

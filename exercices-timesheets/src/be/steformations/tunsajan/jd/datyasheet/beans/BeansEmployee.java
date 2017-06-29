@@ -16,6 +16,16 @@ public class BeansEmployee implements Employee {
 	private List<Project> _projects;
 	private List<Prestation> _prestations;
 
+	
+	public BeansEmployee(Long id, String firstname, String name, String password, String login ) {
+		this._id = id;
+		this._firstname = firstname;
+		this._name = name;
+		this._login = login;
+		this._password = password;
+		this._projects = null;
+		this._prestations = null;
+	}
 	@Override
 	public Long getId() {
 		// TODO Auto-generated method stub
@@ -57,5 +67,17 @@ public class BeansEmployee implements Employee {
 		// TODO Auto-generated method stub
 		return this._prestations;
 	}
+	public void setProject(List<Project> projets){
+		this._projects = projets;
+	}
+	public void setPrestations(List<Prestation> prestations){
+		this._prestations = prestations;
+	}
+	@Override
+	public String toString() {
+		return "BeansEmployee [_id=" + _id + ", _firstname=" + _firstname + ", _name=" + _name + ", _login=" + _login
+				+ ", _password=" + _password + "]";
+	}
+	
 
 }
